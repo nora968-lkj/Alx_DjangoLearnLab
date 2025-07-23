@@ -1,45 +1,41 @@
 import os
 import django
 
-# إعدادات Django
+# إعداد بيئة Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# ✅ إضافة بيانات للتجربة
-# إنشاء مؤلف
-author1 = Author.objects.create(name="Naguib Mahfouz")
-author2 = Author.objects.create(name="Taha Hussein")
+# 📚 كل الكتب لمؤلف معين
+author_name = "Naguib Mahfouz"  # 📝 غيّري الاسم لو حبيتي
+try:
+    author = Author.objects.get(name=author_name)
+    books_by_author = Book.objects.filter(author=author)
+    print(f"📚 كل الكتب لمؤلف {author_name}:")
+    for book in books_by_author:
+        print(f"- {book.title}")
+except Author.DoesNotExist:
+    print(f"❌ لا يوجد مؤلف باسم {author_name}")
 
-# إنشاء كتب
-book1 = Book.objects.create(title="The Cairo Trilogy", author=author1)
-book2 = Book.objects.create(title="Children of Gebelawi", author=author1)
-book3 = Book.objects.create(title="The Days", author=author2)
+print("\n" + "="*40 + "\n")
 
-# إنشاء مكتبة
-library1 = Library.objects.create(name="Central Library")
-library2 = Library.objects.create(name="Community Library")
+# 🏛️ كل الكتب في مكتبة معينة
+library_name = "Central Library"  # 📝 غيّري الاسم لو حبيتي
+try:
+    library = Library.objects.get(name=library_name)
+    books_in_library = Book.objects.filter(library=library)
+    print(f"🏛️ كل الكتب في مكتبة {library_name}:")
+    for book in books_in_library:
+        print(f"- {book.title}")
+except Library.DoesNotExist:
+    print(f"❌ لا توجد مكتبة باسم {library_name}")
 
-# إضافة كتب للمكتبات
-library1.books.add(book1, book2)
-library2.books.add(book2, book3)
+print("\n" + "="*40 + "\n")
 
-# إنشاء أمين مكتبة
-librarian1 = Librarian.objects.create(name="Sara Ahmed", library=library1)
-librarian2 = Librarian.objects.create(name="Mohamed Ali", library=library2)
-
-# ✅ استعلامات
-print("\n📚 كل الكتب لمؤلف محدد:")
-books_by_author = Book.objects.filter(author__name="Naguib Mahfouz")
-for book in books_by_author:
-    print(f"- {book.title}")
-
-print("\n🏛️ كل الكتب في مكتبة محددة:")
-library_books = Library.objects.get(name="Central Library").books.all()
-for book in library_books:
-    print(f"- {book.title}")
-
-print("\n👩‍💼 أمين المكتبة لمكتبة محددة:")
-librarian = Librarian.objects.get(library__name="Community Library")
-print(f"Librarian: {librarian.name}")
+# 👩‍💼 أمين المكتبة لمكتبة معينة
+try:
+    librarian = Librarian.objects.get(library=library)
+    print(f"👩‍💼 أمين مكتبة {library_name}: {librarian.name}")
+except Librarian.DoesNotExist:
+    print(f"❌ لا يوجد أمين مكتبة لمكتبة {library_name}")
