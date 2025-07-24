@@ -3,21 +3,20 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from .models import Book, Library, UserProfile
 
-# ✅ عرض كل الكتب (function-based view)
+# ✅ عرض كل الكتب
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# ✅ عرض تفاصيل مكتبة (class-based view)
+# ✅ عرض تفاصيل مكتبة
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# ✅ تسجيل مستخدم جديد
+# ✅ تسجيل حساب جديد
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -46,13 +45,12 @@ def logout_view(request):
     logout(request)
     return render(request, 'relationship_app/logout.html')
 
-# ✅ View خاص بالـ Admin فقط
+# ✅ Admin View
 @login_required
 def admin_view(request):
-    try:
-        if request.user.userprofile.role == 'Admin':
-            return HttpResponse("✅ Welcome Admin! You have access.")
-        else:
-            return HttpResponse("❌ Access Denied. Admins only.", status=403)
-    except UserProfile.DoesNotExist:
-        return HttpResponse("❌ User profile not found.", status=404)
+    if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'Admin':
+        return render(request, 'relationship_app/admin_view.html')
+    else:
+        return render(request, 'relationship_app/not_allowed.html')
+
+
