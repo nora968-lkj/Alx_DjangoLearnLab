@@ -5,12 +5,12 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import Book, Library, UserProfile
 
-# ✅ عرض كل الكتب
+# ✅ عرض كل الكتب (Function-Based View)
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# ✅ عرض تفاصيل مكتبة
+# ✅ عرض تفاصيل مكتبة (Class-Based View)
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
@@ -49,8 +49,17 @@ def logout_view(request):
 @login_required
 def admin_view(request):
     if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'Admin':
-        return render(request, 'relationship_app/admin_view.html')
+        return render(request, 'relationship_app/admin_dashboard.html')
     else:
         return render(request, 'relationship_app/not_allowed.html')
+
+# ✅ Librarian View
+@login_required
+def librarian_view(request):
+    if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'Librarian':
+        return render(request, 'relationship_app/librarian_dashboard.html')
+    else:
+        return render(request, 'relationship_app/not_allowed.html')
+
 
 
