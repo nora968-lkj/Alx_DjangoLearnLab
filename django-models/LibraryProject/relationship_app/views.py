@@ -45,7 +45,7 @@ def logout_view(request):
     logout(request)
     return render(request, 'relationship_app/logout.html')
 
-# ✅ Admin View
+# ✅ Admin View (للمستخدمين اللي Role بتاعهم Admin فقط)
 @login_required
 def admin_view(request):
     if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'Admin':
@@ -53,7 +53,7 @@ def admin_view(request):
     else:
         return render(request, 'relationship_app/not_allowed.html')
 
-# ✅ Librarian View
+# ✅ Librarian View (للمستخدمين اللي Role بتاعهم Librarian فقط)
 @login_required
 def librarian_view(request):
     if hasattr(request.user, 'userprofile') and request.user.userprofile.role == 'Librarian':
