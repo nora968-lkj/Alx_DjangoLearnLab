@@ -1,14 +1,14 @@
 [33m0217fab[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: complete views with admin and librarian role-based access
-squash[33mce7a9bf[m feat: add librarian_view and dashboard with role-based access
-squash[33m4da9b2e[m fix: rename admin dashboard template to admin_view.html
-squash[33m92c0fa2[m fix: ensure only dmin role can access admin_view
-squash[33m132f2a5[m feat: add admin dashboard template and restrict admin_view access
-squash[33m2fd82c3[m fix: complete views and add missing  templates
-squash[33m333ac9f[m fix: add authentication s and admin_view to urls.py
-squash[33m2f41a96[m feat: protect admin view by role
-squash[33m40a211a[m feat: add serrofile model and authentication views
-squash[33m79f6a25[m ix: dded authentication s to relationship_app/urls.py  
-squash[33me2d5f2b[m تعديلات قبل rebase
+squash[33mce7a9bf[m Initial commit for django-models
+squash[33m4da9b2e[m Initial commit for django-models
+squash[33m92c0fa2[m Initial commit for django-models
+squash[33m132f2a5[m Initial commit for django-models
+squash[33m2fd82c3[m Initial commit for django-models
+squash[33m333ac9f[m Initial commit for django-models
+squash[33m2f41a96[m Initial commit for django-models
+squash[33m40a211a[m Initial commit for django-models
+squash[33m79f6a25[m Initial commit for django-models 
+squash[33me2d5f2b[m Initial commit for django-models
 squash[33mcf623f8[m Initial commit for django-models
 squash[33m515f637[m Initial commit for django-models
 squash[33mb648585[m Initial commit for django-models
